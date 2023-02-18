@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Button Screens Example</title>
+	<style>
+		/* Styling for the buttons and screens */
+		button {
+			margin: 10px;
+			padding: 10px;
+		}
+		.screen {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<!-- Three buttons to switch between screens -->
+	<button id="answer-btn">Answer Screen</button>
+	<button id="control-btn">Control Screen</button>
+	<button id="third-btn">Questions Screen</button>
+
+	<!-- Three screens to show/hide -->
+	<div id="answer-screen" class="screen">
+		<h1>Answer Screen</h1>
+		<p>This is the answer screen.</p>
+	</div>
+	<div id="control-screen" class="screen">
+		<h1>Control Screen</h1>
+		<p>This is the control screen.</p>
+		<select id="question-list">
+			<option value="">Select a question...</option>
+			<option value="Question 1">Question 1: What is your name?</option>
+			<option value="Question 2">Question 2: What is your favorite color?</option>
+			<option value="Question 3">Question 3: What is your quest?</option>
+		</select>
+		<button id="question-btn">Display Question</button>
+	</div>
+	<div id="third-screen" class="screen">
+		<h1>Questions Screen</h1>
+		<p id="selected-question"></p>
+	</div>
+
+	<!-- JavaScript to handle button clicks and screen visibility -->
+	<script>
+		const answerBtn = document.getElementById("answer-btn");
+		const controlBtn = document.getElementById("control-btn");
+		const thirdBtn = document.getElementById("third-btn");
+		const questionList = document.getElementById("question-list");
+		const questionBtn = document.getElementById("question-btn");
+		const answerScreen = document.getElementById("answer-screen");
+		const controlScreen = document.getElementById("control-screen");
+		const questionsScreen = document.getElementById("third-screen");
+		const selectedQuestion = document.getElementById("selected-question");
+
+		answerBtn.addEventListener("click", () => {
+			answerScreen.style.display = "block";
+			controlScreen.style.display = "none";
+			questionsScreen.style.display = "none";
+		});
+
+		controlBtn.addEventListener("click", () => {
+			answerScreen.style.display = "none";
+			controlScreen.style.display = "block";
+			questionsScreen.style.display = "none";
+		});
+
+		thirdBtn.addEventListener("click", () => {
+			answerScreen.style.display = "none";
+			controlScreen.style.display = "none";
+			questionsScreen.style.display = "block";
+		});
+
+		questionBtn.addEventListener("click", () => {
+			const selectedQuestionOption = questionList.options[questionList.selectedIndex];
+			if (selectedQuestionOption.value !== "") {
+				const selectedQuestionText = selectedQuestionOption.textContent;
+				selectedQuestion.textContent = selectedQuestionText;
+			}
+		});
+	</script>
+</body>
+</html>
