@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Camera Scanner</title>
+	<style>
+		video {
+			width: 100%;
+			height: auto;
+		}
+		button {
+			display: block;
+			margin: 20px auto;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #4CAF50;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="video-container">
+		<video id="video-preview"></video>
+	</div>
+	<button id="scan-button">Scan</button>
+	<script>
+		const video = document.getElementById('video-preview');
+		const button = document.getElementById('scan-button');
+
+		// Request access to the device camera
+		navigator.mediaDevices.getUserMedia({ video: true })
+			.then(stream => {
+				// Set the video source to the camera stream
+				video.srcObject = stream;
+				video.play();
+			})
+			.catch(error => {
+				console.error('Unable to access the camera', error);
+			});
+
+		button.addEventListener('click', () => {
+			// TODO: Add scan functionality here
+		});
+	</script>
+</body>
+</html>
