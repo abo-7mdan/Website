@@ -1,82 +1,86 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Button Screens Example</title>
-	<style>
-		/* Styling for the buttons and screens */
-		button {
-			margin: 10px;
-			padding: 10px;
-		}
-		.screen {
-			display: none;
-		}
-	</style>
-</head>
-<body>
-	<!-- Three buttons to switch between screens -->
-	<button id="answer-btn">Answer Screen</button>
-	<button id="control-btn">Control Screen</button>
-	<button id="third-btn">Questions Screen</button>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <style>
+      /* Login form styles */
+      .login-container {
+        margin: auto;
+        width: 300px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
 
-	<!-- Three screens to show/hide -->
-	<div id="answer-screen" class="screen">
-		<h1>Answer Screen</h1>
-		<p>This is the answer screen.</p>
-	</div>
-	<div id="control-screen" class="screen">
-		<h1>Control Screen</h1>
-		<p>This is the control screen.</p>
-		<select id="question-list">
-			<option value="">Select a question...</option>
-			<option value="Question 1">Question 1: What is your name?</option>
-			<option value="Question 2">Question 2: What is your favorite color?</option>
-			<option value="Question 3">Question 3: What is your quest?</option>
-		</select>
-		<button id="question-btn">Display Question</button>
-	</div>
-	<div id="third-screen" class="screen">
-		<h1>Questions Screen</h1>
-		<p id="selected-question"></p>
-	</div>
+      .login-heading {
+        text-align: center;
+      }
 
-	<!-- JavaScript to handle button clicks and screen visibility -->
+      .login-form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .login-form label {
+        margin-bottom: 10px;
+      }
+
+      .login-form input[type="text"],
+      .login-form input[type="password"] {
+        padding: 5px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+        border: none;
+        box-shadow: 0 0 2px gray;
+      }
+
+      .login-form button[type="submit"] {
+        padding: 10px;
+        border-radius: 3px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1 class="login-heading">Login Form</h1>
+      <form class="login-form" onsubmit="onSubmitLogin(event)">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
 	<script>
-		const answerBtn = document.getElementById("answer-btn");
-		const controlBtn = document.getElementById("control-btn");
-		const thirdBtn = document.getElementById("third-btn");
-		const questionList = document.getElementById("question-list");
-		const questionBtn = document.getElementById("question-btn");
-		const answerScreen = document.getElementById("answer-screen");
-		const controlScreen = document.getElementById("control-screen");
-		const questionsScreen = document.getElementById("third-screen");
-		const selectedQuestion = document.getElementById("selected-question");
-
-		answerBtn.addEventListener("click", () => {
-			answerScreen.style.display = "block";
-			controlScreen.style.display = "none";
-			questionsScreen.style.display = "none";
-		});
-
-		controlBtn.addEventListener("click", () => {
-			answerScreen.style.display = "none";
-			controlScreen.style.display = "block";
-			questionsScreen.style.display = "none";
-		});
-
-		thirdBtn.addEventListener("click", () => {
-			answerScreen.style.display = "none";
-			controlScreen.style.display = "none";
-			questionsScreen.style.display = "block";
-		});
-
-		questionBtn.addEventListener("click", () => {
-			const selectedQuestionOption = questionList.options[questionList.selectedIndex];
-			if (selectedQuestionOption.value !== "") {
-				const selectedQuestionText = selectedQuestionOption.textContent;
-				selectedQuestion.textContent = selectedQuestionText;
+		function onSubmitLogin(event) {
+		  event.preventDefault();
+		  var username = document.getElementById('username').value;
+		  var secretCode = document.getElementById('password').value;
+		  var xhr = new XMLHttpRequest();
+		  xhr.open('POST', 'https://script.google.com/macros/s/AKfycbxYCW_8l9rW8zZBpXbnkg2sG6Bs0lucdzzMohmj1UJN35KTICiCGPicyZvM6W7edyFY/exec', true);
+		  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		  xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+			  var result = JSON.parse(xhr.responseText);
+			  if (result.isValid) {
+				// Redirect to the login success page
+				window.location.href = 'login-success.html';
+			  } else {
+				// Show an error message
+				alert('Invalid username or secret code');
+			  }
 			}
-		});
+		  };
+		  xhr.send('username=' + encodeURIComponent(username) + '&secretCode=' + encodeURIComponent(secretCode));
+		}
 	</script>
-</body>
+  </body>
 </html>
